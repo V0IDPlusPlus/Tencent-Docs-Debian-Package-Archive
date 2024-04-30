@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
+unset HTTP_PROXY
+unset http_proxy
+unset HTTPS_PROXY
+unset https_proxy
+
 TEMP_DIR="/tmp/tencent-docs-bin/auto-update"
-SRCINFO_DIR="~/Documents/Coding/ArchLinux/AUR/tencent-docs-bin/aur-repo/.SRCINFO"
+SRCINFO_DIR="/mnt/documents/Coding/ArchLinux/AUR/tencent-docs-bin/aur-repo/.SRCINFO"
 
 # 删除并新建目录
 rm -rf $TEMP_DIR
@@ -9,8 +14,8 @@ mkdir -p $TEMP_DIR
 cd $TEMP_DIR
 
 # 在腾讯文档官网下载最新的安装包
-wget https://down.qq.com/qqweb/linux_docs/LinuxTencentDocsAmd64.deb
-wget https://down.qq.com/qqweb/linux_docs/LinuxTencentDocsArm64.deb
+wget "https://docs.qq.com/api/package/get?channel_id=30001&version_id=latest&package_name=TencentDocs-x64.deb"   -O LinuxTencentDocsAmd64.deb
+wget "https://docs.qq.com/api/package/get?channel_id=30001&version_id=latest&package_name=TencentDocs-arm64.deb" -O LinuxTencentDocsArm64.deb
 
 # 解包，读取版本
 amd64_info=`ar p LinuxTencentDocsAmd64.deb control.tar.gz | tar xzOf - ./control`
